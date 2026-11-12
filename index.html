@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#131b18">
+<meta name="description" content="Guía a tu héroe en un mundo fantástico que vive por su cuenta.">
+<title>Valle de Bruma</title>
+<link rel="stylesheet" href="style.css">
+<script type="module" src="app.mjs"></script>
+</head>
+<body>
+<header class="hud" aria-label="Estado del héroe">
+  <a class="brand" href="./" title="Valle de Bruma"><span class="brand-icon" aria-hidden="true">◇</span><span class="brand-text">Valle de Bruma</span></a>
+  <div class="hud-hero"><div class="portrait"><canvas id="portrait" width="86" height="86" aria-hidden="true"></canvas></div><div><strong id="hero-name"></strong><small id="hero-role"></small></div></div>
+  <div class="hud-bars">
+    <div class="meter hp"><span>Salud</span><span id="hp-value"></span><div><i id="hp-bar"></i></div></div>
+    <div class="meter xp"><span>Nivel <b id="level"></b></span><span id="xp-value"></span><div><i id="xp-bar"></i></div></div>
+  </div>
+  <div class="hud-stats" id="stats"></div>
+  <div class="hud-res"><span class="pill gold" id="gold" title="Monedas"></span><span class="pill potion" id="potions" title="Pociones de salud"></span><span class="pill" title="Día y hora"><b id="day"></b> · <span id="daytime"></span></span></div>
+  <div class="hud-actions">
+    <span class="live"><i></i><span id="live">Mundo en marcha</span></span>
+    <div class="speeds" aria-label="Velocidad del juego"><button class="button speed" id="pause" type="button" aria-pressed="false">Pausa</button><button class="button speed" id="normal" type="button" aria-pressed="true">1×</button><button class="button speed" id="fast" type="button" aria-pressed="false">3×</button></div>
+    <button id="help" class="button subtle" type="button">Cómo jugar</button>
+  </div>
+</header>
+<main class="layout">
+  <section class="map-panel panel" aria-labelledby="atlas-title">
+    <div class="map-bar">
+      <button id="back" class="button subtle back" type="button" hidden>← Atlas</button>
+      <h2 id="atlas-title" class="sr-only">Atlas del valle</h2>
+      <nav class="tabs" id="tabs" aria-label="Lugares del valle"></nav>
+      <div class="map-actions">
+        <p class="current" role="status" id="current"></p>
+        <button class="button small" id="auto" type="button">Ruta automática</button>
+        <button class="button small subtle" id="recall" type="button">Volver a la villa</button>
+      </div>
+    </div>
+    <div class="stage">
+      <div id="atlas" class="atlas">
+        <canvas id="world" width="1000" height="620" aria-label="Mapa ilustrado del valle. Toca un lugar para entrar y verlo de cerca."></canvas>
+        <div id="markers"></div>
+        <p id="atlas-sub" class="map-hint"></p>
+        <ul id="feed" class="feed" aria-hidden="true"></ul>
+      </div>
+    </div>
+  </section>
+  <aside class="side panel">
+    <div class="side-tabs" role="tablist" aria-label="Panel lateral">
+      <button type="button" role="tab" data-pane="place" aria-selected="true">Lugar</button>
+      <button type="button" role="tab" data-pane="hero" aria-selected="false">Héroe</button>
+      <button type="button" role="tab" data-pane="log" aria-selected="false">Diario</button>
+    </div>
+    <div class="pane" id="pane-place" aria-live="polite"><div id="zone-detail" class="zone-detail"></div></div>
+    <div class="pane" id="pane-hero" hidden>
+      <div class="pane-pad">
+        <div class="pane-head"><h3>Órdenes</h3><button class="button small" id="find" type="button">Ver a mi héroe</button></div>
+        <div class="order-grid">
+          <label>Prioridad<select id="focus"><option value="balanced">Equilibrado</option><option value="hunt">Cazar monstruos</option><option value="gather">Recolectar recursos</option></select></label>
+          <label>Regreso por salud<select id="policy"><option value="cautious">Prudente · 50%</option><option value="standard">Normal · 35%</option><option value="bold">Audaz · 20%</option></select></label>
+        </div>
+        <p class="note">Con pociones bebe una al bajar del 40% y sigue luchando. Sin pociones vuelve al llegar al límite.</p>
+        <div class="pane-head"><h3>Equipo</h3><small class="muted">Toca una pieza para ir a su tienda</small></div>
+        <div id="equipment" class="equipment"></div>
+        <div class="pane-head"><h3>Mochila</h3></div>
+        <div id="inventory" class="chips bag"></div>
+      </div>
+    </div>
+    <div class="pane" id="pane-log" hidden><ul id="log" class="log"></ul></div>
+  </aside>
+</main>
+<dialog id="modal"><div id="modal-body"></div></dialog>
+</body>
+</html>
